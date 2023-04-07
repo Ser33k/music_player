@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.scss";
 import Player from "./components/Player";
 import { useRef, useState } from "react";

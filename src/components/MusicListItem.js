@@ -1,3 +1,5 @@
+import React from "react";
+
 import star from "../images/star-svgrepo-com.svg";
 
 const MusicListItem = (props) => {
