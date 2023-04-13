@@ -1,9 +1,13 @@
 import React from "react";
 import MusicListItem from "./MusicListItem";
 
-const MusicList = ({ tracks, audioRef }) => {
+const MusicList = ({ tracks, handleTrackSelect }) => {
   const listItems = tracks.map((track) => (
-    <MusicListItem track={track} audioRef={audioRef} />
+    <MusicListItem
+      key={track.id}
+      handleTrackSelect={handleTrackSelect}
+      track={track}
+    />
   ));
   return <ul className="list">{listItems}</ul>;
 };

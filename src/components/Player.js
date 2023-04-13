@@ -1,55 +1,49 @@
-import React, { useRef, useState } from "react";
-
-const data = [
-  "https://mp3.chillhop.com/serve.php/?mp3=9228",
-  "https://mp3.chillhop.com/serve.php/?mp3=10074",
-  "https://mp3.chillhop.com/serve.php/?mp3=9148",
-];
+import React from "react";
 
 const Player = (props) => {
-  const [current, setCurrent] = useState(1);
-
-  const onPreviousClick = () => {};
-
-  const onNextClick = () => {};
-
-  const handlePlayClick = () => {
-    console.log("play");
-  };
-
-  const handlePauseClick = () => {
-    console.log("pasue");
+  const handleEnded = () => {
+    console.log("endnednene");
   };
   return (
     <div className="player__container">
-      <div className="player__details">
-        <img
-          className="player__details-icon"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6mSXj2A2zh92CV9tMNKfnvf3iq5ZRIPQr_w&usqp=CAU"
-          alt=""
-        />
-        <h2 className="player__details-title">Flowers</h2>
-        <p className="player__details-artist">Miley Cyrus</p>
-      </div>
-      <div className="player__controls">
-        <button
-          className="player__button player__button--previous"
-          onClick={onPreviousClick}
-        ></button>
-        <audio
-          ref={props.audioRef}
-          className="audio"
-          src={data[current]}
-          autoPlay={false}
-          controls={true}
-          onPlay={handlePlayClick}
-          onPause={handlePauseClick}
-        ></audio>
-        <button
-          className="player__button player__button--next"
-          onClick={onNextClick}
-        ></button>
-      </div>
+      {props.activeTrack ? (
+        <>
+          <div className="player__details">
+            <img
+              className="player__details-icon"
+              src={props.activeTrack.image}
+              alt=""
+            />
+            <h2 className="player__details-title">{props.activeTrack.name}</h2>
+            <p className="player__details-artist">
+              {props.activeTrack.artists}
+            </p>
+          </div>
+
+          <div className="player__controls">
+            <button
+              className="player__button player__button--previous"
+              onClick={props.handlePreviousTrackClick}
+            ></button>
+            <audio
+              ref={props.audioRef}
+              className="audio"
+              src={props.activeTrack.previewUrl}
+              autoPlay={true}
+              controls={true}
+              onPlay={() => props.handleAudioPlayClick(props.activeTrack.id)}
+              onPause={props.handleAudioPauseClick}
+              onEnded={handleEnded}
+            ></audio>
+            <button
+              className="player__button player__button--next"
+              onClick={props.handleNextTrackClick}
+            ></button>
+          </div>
+        </>
+      ) : (
+        <h2>Select track from the list...</h2>
+      )}
     </div>
   );
 };

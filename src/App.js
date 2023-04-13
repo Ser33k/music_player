@@ -54,6 +54,8 @@ function App() {
                 previewUrl: track.preview_url,
                 image: track.album.images[1].url,
                 id: track.id,
+                isActive: false,
+                isPlaying: false,
               }));
 
             console.log(tracks);
@@ -63,23 +65,178 @@ function App() {
           .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
-
-    // const getToken = async () => {
-    //   try {
-    //     const response = await axios.post(
-    //       'https://accounts.spotify.com/api/token',
-    //       JSON.stringify(data),
-    //       headers
-    //     );
-    //     console.log(response.data.access_token);
-    //     return response.data.access_token;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    // const token = getToken();
-    // fetch("https://accounts.spotify.com/api/token")
   }, []);
+
+  const handleAudioPauseClick = () => {
+    const tracksCopy = [...tracks];
+
+    const updatedTracks = tracksCopy.map((track) => {
+      return {
+        ...track,
+        isPlaying: false,
+      };
+    });
+
+    setTracks(updatedTracks);
+  };
+  const handleAudioPlayClick = (id) => {
+    const tracksCopy = [...tracks];
+
+    const updatedTracks = tracksCopy.map((track) => {
+      if (track.id === id)
+        return {
+          ...track,
+          isPlaying: true,
+        };
+      else
+        return {
+          ...track,
+        };
+    });
+
+    setTracks(updatedTracks);
+  };
+
+  const handleNextTrackClick = () => {
+    const tracksCopy = [...tracks];
+    const activeIndex = tracksCopy.findIndex((track) => track.isActive);
+
+    if (activeIndex + 1 === tracksCopy.length) {
+      const updatedTracks = tracksCopy.map((track, index) => {
+        if (index === 0) {
+          return {
+            ...track,
+            isPlaying: true,
+            isActive: true,
+          };
+        } else {
+          return {
+            ...track,
+            isPlaying: false,
+            isActive: false,
+          };
+        }
+      });
+
+      setTracks(updatedTracks);
+    } else {
+      const updatedTracks = tracksCopy.map((track, index) => {
+        if (index === activeIndex + 1) {
+          return {
+            ...track,
+            isPlaying: true,
+            isActive: true,
+          };
+        } else {
+          return {
+            ...track,
+            isPlaying: false,
+            isActive: false,
+          };
+        }
+      });
+
+      setTracks(updatedTracks);
+    }
+  };
+
+  const handlePreviousTrackClick = () => {
+    const tracksCopy = [...tracks];
+    const activeIndex = tracksCopy.findIndex((track) => track.isActive);
+
+    if (activeIndex === 0) {
+      const updatedTracks = tracksCopy.map((track, index) => {
+        if (index === tracksCopy.length - 1) {
+          return {
+            ...track,
+            isPlaying: true,
+            isActive: true,
+          };
+        } else {
+          return {
+            ...track,
+            isPlaying: false,
+            isActive: false,
+          };
+        }
+      });
+
+      setTracks(updatedTracks);
+    } else {
+      const updatedTracks = tracksCopy.map((track, index) => {
+        if (index === activeIndex - 1) {
+          return {
+            ...track,
+            isPlaying: true,
+            isActive: true,
+          };
+        } else {
+          return {
+            ...track,
+            isPlaying: false,
+            isActive: false,
+          };
+        }
+      });
+
+      setTracks(updatedTracks);
+    }
+  };
+
+  const handleTrackSelect = (id, isActive, isPlaying) => {
+    if (isActive && isPlaying === false) {
+      audio.current.play();
+      const tracksCopy = [...tracks];
+
+      const updatedTracks = tracksCopy.map((track) => {
+        if (track.id === id)
+          return {
+            ...track,
+            isPlaying: true,
+          };
+        else
+          return {
+            ...track,
+          };
+      });
+
+      setTracks(updatedTracks);
+    } else if (isActive && isPlaying) {
+      audio.current.pause();
+      const tracksCopy = [...tracks];
+
+      const updatedTracks = tracksCopy.map((track) => {
+        return {
+          ...track,
+          isPlaying: false,
+        };
+      });
+
+      setTracks(updatedTracks);
+    } else {
+      const tracksCopy = [...tracks];
+
+      const updatedTracks = tracksCopy.map((track) => {
+        if (track.id === id)
+          return {
+            ...track,
+            isActive: true,
+            isPlaying: true,
+          };
+        else
+          return {
+            ...track,
+            isActive: false,
+            isPlaying: false,
+          };
+      });
+
+      setTracks(updatedTracks);
+    }
+  };
+
+  const activeTrack = [...tracks].find((track) => track.isActive);
+
   return (
     <div className="App">
       <header className="header">
@@ -96,9 +253,16 @@ function App() {
         />
       </header>
       <main className="main">
-        <MusicList tracks={tracks} audioRef={audio} />
+        <MusicList handleTrackSelect={handleTrackSelect} tracks={tracks} />
 
-        <Player audioRef={audio} />
+        <Player
+          handleAudioPauseClick={handleAudioPauseClick}
+          handleAudioPlayClick={handleAudioPlayClick}
+          handleNextTrackClick={handleNextTrackClick}
+          handlePreviousTrackClick={handlePreviousTrackClick}
+          audioRef={audio}
+          activeTrack={activeTrack}
+        />
       </main>
     </div>
   );
