@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
-import star from "../images/star-svgrepo-com.svg";
+const MusicListItem = ({ track, audioRef }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
 
-const MusicListItem = (props) => {
-  const handlePlayClick = () => {
-    console.log(props.audioRef.current.paused);
-    if (props.audioRef.current.paused) props.audioRef.current.play();
-    else props.audioRef.current.pause();
+  const handlePlayClick = (url) => {
+    setIsPlaying((prevState) => !prevState);
+    console.log(url);
+    audioRef.current.src = url;
+    audioRef.current.play();
   };
   return (
-    <li className="list__item">
-      <img
-        className="list__item-icon"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6mSXj2A2zh92CV9tMNKfnvf3iq5ZRIPQr_w&usqp=CAU"
-        alt="icon"
-      />
+    <li key={track.id} className="list__item">
+      <img className="list__item-icon" src={track.image} alt="icon" />
       <div className="list__item-texts">
-        <p className="list__item-title">Flowers</p>
-        <p className="list__item-artist">Miley Cyrus</p>
+        <p className="list__item-title">{track.name}</p>
+        <p className="list__item-artist">{track.artists}</p>
       </div>
-      <button onClick={handlePlayClick} className="list__item-play"></button>
-      <img src={star} alt="star" className="list__item-star" />
+      <button
+        onClick={() => handlePlayClick(track.previewUrl)}
+        className={`list__item-play ${isPlaying ? "active" : ""}`}
+      ></button>
     </li>
   );
 };
