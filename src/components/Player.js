@@ -2,7 +2,7 @@ import React from "react";
 
 const Player = (props) => {
   const handleEnded = () => {
-    console.log("endnednene");
+    props.handleNextTrackClick();
   };
   return (
     <div className="player__container">

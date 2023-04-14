@@ -28,115 +28,117 @@
       margin: 0 30px;
     }
   }
-}
 
-.main {
-  display: flex;
-  height: calc(100vh - 80px);
-  box-shadow: 0px -1px 15px 2px #accbe9;
-}
-
-.list {
-  width: 40vw;
-  max-width: 460px;
-  overflow-y: scroll;
-  background-color: #e1ebf5;
-
-  &__item {
+  .main {
     display: flex;
-    align-items: center;
-    position: relative;
+    height: calc(100vh - 80px);
+    box-shadow: 0px -1px 15px 2px #accbe9;
 
-    border-bottom: 1px solid black;
-    padding: 15px;
+    .list {
+      width: 40vw;
+      max-width: 460px;
+      overflow-y: scroll;
+      background-color: #e1ebf5;
 
-    &-icon {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
+      &__item {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        border-bottom: 1px solid black;
+        padding: 15px;
+
+        &-icon {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+        }
+
+        &-texts {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 70px;
+
+          margin-left: 30px;
+          font-size: 15px;
+          width: 50%;
+        }
+
+        &-title {
+          font-weight: bold;
+        }
+
+        &--active {
+          background-color: #adcff0;
+        }
+
+        &-play {
+          margin-left: auto;
+          border: none;
+          background-image: url("../public/play-svgrepo-com.svg");
+          background-size: 40px;
+          background-color: transparent;
+          background-clip: content-box;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+        }
+        .active-button {
+          background-image: url("../public/pause-svgrepo-com.svg");
+        }
+      }
     }
 
-    &-texts {
+    .player__container {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 70px;
+      justify-content: center;
+      align-items: center;
+      background-color: #f1f3f4;
 
-      margin-left: 30px;
-    }
+      .player__details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
 
-    &-title {
-      font-size: 16px;
-      font-weight: bold;
-    }
+        &-title {
+          margin-top: 20px;
+          font-size: 34px;
+        }
 
-    &--active {
-      background-color: #adcff0;
-    }
+        &-artist {
+          margin-top: 15px;
+          font-size: 24px;
+        }
+      }
 
-    &-play {
-      margin-left: auto;
-      border: none;
-      background-image: url("../public/play-svgrepo-com.svg");
-      background-size: 40px;
-      background-color: transparent;
-      background-clip: content-box;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
-    .active-button {
-      background-image: url("../public/pause-svgrepo-com.svg");
-    }
-  }
-}
+      .player__button {
+        width: 50px;
+        height: 50px;
+        background-size: 50px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
 
-.player__container {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f1f3f4;
+        &--previous {
+          background-image: url("../public/previous-svgrepo-com.svg");
 
-  .player__details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 50px;
+          &:hover {
+            background-image: url("../public/previous-svgrepo-com-hover.svg");
+          }
+        }
 
-    &-title {
-      margin-top: 20px;
-      font-size: 34px;
-    }
+        &--next {
+          background-image: url("../public/next-svgrepo-com.svg");
 
-    &-artist {
-      margin-top: 15px;
-      font-size: 24px;
-    }
-  }
-
-  .player__button {
-    width: 50px;
-    height: 50px;
-    background-size: 50px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  .player__button--previous {
-    background-image: url("../public/previous-svgrepo-com.svg");
-
-    &:hover {
-      background-image: url("../public/previous-svgrepo-com-hover.svg");
-    }
-  }
-
-  .player__button--next {
-    background-image: url("../public/next-svgrepo-com.svg");
-
-    &:hover {
-      background-image: url("../public/next-svgrepo-com-hover.svg");
+          &:hover {
+            background-image: url("../public/next-svgrepo-com-hover.svg");
+          }
+        }
+      }
     }
   }
 }
