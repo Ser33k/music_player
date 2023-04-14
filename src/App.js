@@ -6,8 +6,12 @@ import MusicList from "./components/MusicList";
 import SpotifyWebApi from "spotify-web-api-node";
 import axios from "axios";
 import qs from "qs";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function App() {
+  const [tracks, setTracks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.REACT_APP_BASIC_CLIENT_ID,
     clientSecret: process.env.REACT_APP_BASIC_CLIENT_SECRET,
@@ -29,8 +33,6 @@ function App() {
     grant_type: "client_credentials",
   };
 
-  const [tracks, setTracks] = useState([]);
-
   useEffect(() => {
     axios
       .post(
@@ -45,7 +47,6 @@ function App() {
           .getPlaylist("37i9dQZEVXbMDoHDwVN2tF")
           .then((res) => {
             const items = res.body.tracks.items;
-            // console.log(items);
             const tracks = items
               .filter(({ track }) => !!track.preview_url)
               .map(({ track }) => ({
@@ -58,8 +59,7 @@ function App() {
                 isPlaying: false,
               }));
 
-            console.log(tracks);
-
+            setLoading(false);
             setTracks(tracks);
           })
           .catch((error) => console.log(error));
@@ -239,6 +239,12 @@ function App() {
 
   return (
     <div className="App">
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <header className="header">
         <img
           className="header__icon"

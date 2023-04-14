@@ -115,27 +115,82 @@
         }
       }
 
-      .player__button {
-        width: 50px;
-        height: 50px;
-        background-size: 50px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
+      .player__controls {
+        display: flex;
+        align-items: center;
+        .player__button {
+          width: 50px;
+          height: 50px;
+          background-size: 50px;
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
 
-        &--previous {
-          background-image: url("../public/previous-svgrepo-com.svg");
+          &--previous {
+            background-image: url("../public/previous-svgrepo-com.svg");
 
-          &:hover {
-            background-image: url("../public/previous-svgrepo-com-hover.svg");
+            &:hover {
+              background-image: url("../public/previous-svgrepo-com-hover.svg");
+            }
+          }
+
+          &--next {
+            background-image: url("../public/next-svgrepo-com.svg");
+
+            &:hover {
+              background-image: url("../public/next-svgrepo-com-hover.svg");
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .App {
+    .header {
+      h1 {
+        font-size: 20px;
+      }
+    }
+    .main {
+      flex-direction: column;
+      padding-top: 30px;
+      height: calc(100vh - 110px);
+      .list {
+        width: 100%;
+        max-width: 100%;
+        order: 2;
+      }
+
+      .player__container {
+        margin-bottom: 30px;
+        .player__details {
+          &-icon {
+            max-width: 200px;
+          }
+
+          &-title {
+            margin-top: 10px;
+            font-size: 25px;
+          }
+
+          &-artist {
+            margin-top: 10px;
+            font-size: 18px;
           }
         }
 
-        &--next {
-          background-image: url("../public/next-svgrepo-com.svg");
+        .player__controls {
+          .audio {
+            width: 200px;
+          }
 
-          &:hover {
-            background-image: url("../public/next-svgrepo-com-hover.svg");
+          .player__button {
+            width: 30px;
+            height: 30px;
+            background-size: 30px;
           }
         }
       }
