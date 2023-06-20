@@ -8,10 +8,14 @@ import axios from "axios";
 import qs from "qs";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Header from "./components/Header";
+import Form from "./components/Form";
 
 function App() {
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.REACT_APP_BASIC_CLIENT_ID,
     clientSecret: process.env.REACT_APP_BASIC_CLIENT_SECRET,
@@ -235,6 +239,19 @@ function App() {
     }
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubscribe = (name, email) => {
+    handleClose();
+    alert(`Thanks ${name}! You successfully subscribed our newsletter!`);
+  };
+
   const activeTrack = [...tracks].find((track) => track.isActive);
 
   return (
@@ -245,19 +262,13 @@ function App() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <header className="header">
-        <img
-          className="header__icon"
-          src="https://www.svgrepo.com/download/512532/music-1005.svg"
-          alt="music-icon"
-        />
-        <h1>Music Player</h1>
-        <img
-          className="header__icon"
-          src="https://www.svgrepo.com/download/512532/music-1005.svg"
-          alt="music-icon"
-        />
-      </header>
+
+      <Form
+        open={open}
+        handleClose={handleClose}
+        handleSubscribe={handleSubscribe}
+      />
+      <Header handleDialogOpen={handleClickOpen} />
       <main className="main">
         <MusicList handleTrackSelect={handleTrackSelect} tracks={tracks} />
 
